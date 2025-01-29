@@ -4,40 +4,40 @@ import {ref} from 'vue'
 const props = defineProps({
   module: Object,
   moduleName: String,
-  param: Array,
-  range1: Array,
-  range2: Array,
-  step1: Number,
-  step2: Number,
-  default1: Number,
-  default2: Number
+  controllers: Array,
+  firstControllerRange: Array,
+  secondControllerRange: Array,
+  firstControllerStep: Number,
+  secondControllerStep: Number,
+  firstControllerDefault: Number,
+  secondControllerDefault: Number
 })
 
 const module = props.module
-const param = props.param
-const param1 = ref('')
-const param2 = ref('')
-param1.value = props.default1
-param2.value = props.default2
+const controllers = props.controllers
+const firstControllerValue = ref('')
+const secondControllerValue = ref('')
+firstControllerValue.value = props.firstControllerDefault
+secondControllerValue.value = props.secondControllerDefault
 
 //init
 const set = {}
 
-set[param[0]] = param1.value
-set[param[1]] = param2.value
+set[controllers[0]] = firstControllerValue.value
+set[controllers[1]] = secondControllerValue.value
 
 module.set(set)
-function changeParam1(e){
-  param1.value = e.target.value
+function changeFirstControllerValue(e){
+  firstControllerValue.value = e.target.value
   const set = {}
-  set[param[0]] = param1.value
+  set[controllers[0]] = firstControllerValue.value
   module.set(set)
 }
 
-function changeParam2(e){
-  param2.value = e.target.value
+function changeSecondControllerValue(e){
+  secondControllerValue.value = e.target.value
   const set = {}
-  set[param[1]] = param2.value
+  set[controllers[1]] = secondControllerValue.value
   module.set(set)
 }
 
@@ -48,15 +48,15 @@ function changeParam2(e){
   <div class = 'horizontal-module'>
   <h3 class = 'module-name'> {{ moduleName }} </h3>
   
-  <input class  = 'horizontal-range range' :value="param1" @input="changeParam1" type="range"
-   :min = 'range1[0]' :max = 'range1[1]' :step = 'step1'/>
+  <input class  = 'horizontal-range range' :value="firstControllerValue" @input="changeFirstControllerValue" type="range"
+   :min = 'firstControllerRange[0]' :max = 'firstControllerRange[1]' :step = 'firstControllerStep'/>
 
-  <div class = 'horizontal-label1'>  {{ param[0] }} </div>
+  <div class = 'horizontal-label1'>  {{ controllers[0] }} </div>
 
-  <input class = 'horizontal-range range' :value="param2" @input="changeParam2"  type="range"
-   :min = 'range2[0]' :max = 'range2[1]' :step = 'step2'/>
+  <input class = 'horizontal-range range' :value="secondControllerValue" @input="changeSecondControllerValue"  type="range"
+   :min = 'secondControllerRange[0]' :max = 'secondControllerRange[1]' :step = 'secondControllerStep'/>
 
-   <div class = 'horizontal-label2'>  {{ param[1] }}</div>
+   <div class = 'horizontal-label2'>  {{ controllers[1] }}</div>
 
   </div>
 </template>

@@ -53,14 +53,20 @@ function setGain(e){
   <Oscillator :module = "generator3" :moduleName = " 'osc3' " :defaultAmp = -100 :defaultFreq = 10>  </Oscillator>
   </div>
 
- <HorizontalModule :module = "vibrato" :moduleName = " 'vibrato' " :param = "['depth', 'frequency']"
-  :range1 = [0,1] :range2 =[0,4] :step1 = 0.1 :step2 = 0.1 :default1 = 1 :default2 = 0.3> </HorizontalModule>
+ <HorizontalModule :module = "vibrato" :moduleName = " 'vibrato' " :controllers = "['depth', 'frequency']"
+  :firstControllerRange = [0,1] :secondControllerRange =[0,4] :firstControllerStep = 0.1
+   :secondControllerStep = 0.1 :firstControllerDefault = 1 :secondControllerDefault = 0.3>
+ </HorizontalModule>
 
- <HorizontalModule :module = "filter" :moduleName = " 'low filter' " :param = "['Q', 'frequency']"
-  :range1 = [0,10] :range2 =[0,5000] :step1 = 1 :step2 = 1 :default1 = 10 :default2 = 500> </HorizontalModule>
+ <HorizontalModule :module = "filter" :moduleName = " 'low filter' " :controllers = "['Q', 'frequency']"
+  :firstControllerRange = [0,10] :secondControllerRange =[0,5000] :firstControllerStep = 1
+   :secondControllerStep = 1 :firstControllerDefault = 10 :secondControllerDefault = 500>
+ </HorizontalModule>
 
- <HorizontalModule :module = "reverb" :moduleName = " 'reverb' " :param = "['wet', 'decay']"
-  :range1 = [0,1] :range2 =[1,10] :step1 = 0.1 :step2 = 1 :default1 = 1 :default2 = 100> </HorizontalModule> 
+ <HorizontalModule :module = "reverb" :moduleName = " 'reverb' " :controllers = "['wet', 'decay']"
+  :firstControllerRange = [0,1] :secondControllerRange =[1,10] :firstControllerStep = 0.1
+   :secondControllerStep = 1 :firstControllerDefault = 1 :secondControllerDefault = 100>
+ </HorizontalModule> 
   
 </div>
 <div class = 'menu'>
