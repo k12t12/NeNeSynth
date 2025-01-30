@@ -20,13 +20,34 @@ const secondControllerValue = ref('')
 firstControllerValue.value = props.firstControllerDefault
 secondControllerValue.value = props.secondControllerDefault
 
-//init
-const set = {}
+//MIDI input
+navigator.requestMIDIAccess()
+    .then(onMIDISuccess, onMIDIFailure);
+function onMIDIFailure() {
+    console.log("Не удалось получить доступ к MIDI.");
+}    
+function onMIDISuccess(midiAccess) {
+    const inputs = midiAccess.inputs;
+    inputs.forEach(input => {
+        input.onmidimessage = changeControllersValueMIDI;
+    });
+}
 
+//controllers init
+const set = {}
 set[controllers[0]] = firstControllerValue.value
 set[controllers[1]] = secondControllerValue.value
-
 module.set(set)
+
+function changeControllersValueMIDI(e){
+  firstControllerValue.value = e.data[2] / (127/props.firstControllerRange[1])
+  secondControllerValue.value = e.data[2] / (127/props.secondControllerRange[1])
+  const set = {}
+  set[controllers[0]] = firstControllerValue.value
+  set[controllers[1]] = secondControllerValue.value
+  module.set(set)
+}
+
 function changeFirstControllerValue(e){
   firstControllerValue.value = e.target.value
   const set = {}

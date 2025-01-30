@@ -54,18 +54,18 @@ function setGain(e){
   </div>
 
  <HorizontalModule :module = "vibrato" :moduleName = " 'vibrato' " :controllers = "['depth', 'frequency']"
-  :firstControllerRange = [0,1] :secondControllerRange =[0,4] :firstControllerStep = 0.1
+  :firstControllerRange = [0,1] :secondControllerRange =[0,4] :firstControllerStep = 0.01
    :secondControllerStep = 0.1 :firstControllerDefault = 1 :secondControllerDefault = 0.3>
  </HorizontalModule>
 
  <HorizontalModule :module = "filter" :moduleName = " 'low filter' " :controllers = "['Q', 'frequency']"
-  :firstControllerRange = [0,10] :secondControllerRange =[0,5000] :firstControllerStep = 1
+  :firstControllerRange = [0,10] :secondControllerRange =[0,5000] :firstControllerStep = 0.1
    :secondControllerStep = 1 :firstControllerDefault = 10 :secondControllerDefault = 500>
  </HorizontalModule>
 
  <HorizontalModule :module = "reverb" :moduleName = " 'reverb' " :controllers = "['wet', 'decay']"
-  :firstControllerRange = [0,1] :secondControllerRange =[1,10] :firstControllerStep = 0.1
-   :secondControllerStep = 1 :firstControllerDefault = 1 :secondControllerDefault = 100>
+  :firstControllerRange = [0,1] :secondControllerRange =[1,10] :firstControllerStep = 0.01
+   :secondControllerStep = 0.01 :firstControllerDefault = 1 :secondControllerDefault = 100>
  </HorizontalModule> 
   
 </div>
