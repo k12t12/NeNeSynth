@@ -10,7 +10,9 @@ const props = defineProps({
   firstControllerStep: Number,
   secondControllerStep: Number,
   firstControllerDefault: Number,
-  secondControllerDefault: Number
+  secondControllerDefault: Number,
+  firstControllerChannel: Number,
+  secondControllerChannel: Number
 })
 
 const module = props.module
@@ -24,7 +26,7 @@ secondControllerValue.value = props.secondControllerDefault
 navigator.requestMIDIAccess()
     .then(onMIDISuccess, onMIDIFailure);
 function onMIDIFailure() {
-    console.log("Не удалось получить доступ к MIDI.");
+    console.log(" MIDI = ):");
 }    
 function onMIDISuccess(midiAccess) {
     const inputs = midiAccess.inputs;
@@ -40,12 +42,23 @@ set[controllers[1]] = secondControllerValue.value
 module.set(set)
 
 function changeControllersValueMIDI(e){
-  firstControllerValue.value = e.data[2] / (127/props.firstControllerRange[1])
-  secondControllerValue.value = e.data[2] / (127/props.secondControllerRange[1])
-  const set = {}
-  set[controllers[0]] = firstControllerValue.value
-  set[controllers[1]] = secondControllerValue.value
-  module.set(set)
+  
+  if (props.firstControllerChannel == e.data[0]-176) {
+    firstControllerValue.value = e.data[2] / (127/props.firstControllerRange[1])
+    const set = {}
+    set[controllers[0]] = firstControllerValue.value
+    module.set(set)
+  }
+  
+  if (props.secondControllerChannel == e.data[0]-176) {
+    secondControllerValue.value = e.data[2] / (127/props.secondControllerRange[1])
+    if (controllers[1] == 'decay' && secondControllerValue.value < 0.01) {secondControllerValue.value = 0.01 }
+    const set = {}
+    set[controllers[1]] = secondControllerValue.value
+    module.set(set)
+  }
+  
+  
 }
 
 function changeFirstControllerValue(e){

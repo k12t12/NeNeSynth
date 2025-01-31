@@ -5,7 +5,8 @@ const props = defineProps({
   module: Object,
   moduleName: String,
   defaultAmp: Number,
-  defaultFreq: Number
+  defaultFreq: Number,
+  MIDIchannel: Number
 })
 
 const osc = props.module
@@ -14,11 +15,33 @@ const amp = ref('')
 freq.value = props.defaultFreq
 amp.value = props.defaultAmp
 
+//MIDI input
+navigator.requestMIDIAccess()
+    .then(onMIDISuccess, onMIDIFailure);
+function onMIDIFailure() {
+    console.log(" MIDI = ):");
+}    
+function onMIDISuccess(midiAccess) {
+    const inputs = midiAccess.inputs;
+    inputs.forEach(input => {
+        input.onmidimessage = changeControllersValueMIDI;
+    });
+}
+
 //init
 osc.set({
     frequency: freq.value,
     volume: amp.value
   })
+function changeControllersValueMIDI(e){
+  if (props.MIDIchannel == e.data[0]-176) {
+    amp.value = e.data[2] - 127
+    console.log(e.data[2]-127)
+    osc.set({
+    volume: amp.value
+    })
+  }
+}
 
 function changeFrequency(e){
   freq.value = e.target.value

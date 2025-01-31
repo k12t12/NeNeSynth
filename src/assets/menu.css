@@ -6,6 +6,10 @@
 .gain-range{
     width: 90%;
 }
+input[type='number'] {
+display: block;
+}
+
 button {
     height: 100px;
     width: 40%;
